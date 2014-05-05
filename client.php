@@ -15,7 +15,7 @@ show($client->__getFunctions());
 // Make a call to the getNames method and print out the results
 $names = $client->__soapCall("getNames", array("set" => "all"));
 show($names);                    
-                    
+
 function show($data){
     echo "<pre>";
     print_r($data); 
