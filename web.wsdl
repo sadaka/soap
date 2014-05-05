@@ -1,0 +1,108 @@
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="hirdwebphp" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="hirdwebphp">
+<types>
+<xsd:schema targetNamespace="hirdwebphp">
+<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+<xsd:complexType name="responseMsg">
+<xsd:all>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="message" type="xsd:string"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="boys">
+<xsd:complexContent>
+<xsd:restriction base="SOAP-ENC:Array">
+<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+</xsd:restriction>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="girls">
+<xsd:complexContent>
+<xsd:restriction base="SOAP-ENC:Array">
+<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+</xsd:restriction>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ScreenerList">
+<xsd:complexContent>
+<xsd:restriction base="SOAP-ENC:Array">
+<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:item[]"/>
+</xsd:restriction>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="nameList">
+<xsd:all>
+<xsd:element name="boys" type="tns:boys" minOccurs="0"/>
+<xsd:element name="girls" type="tns:girls" minOccurs="0"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="allColors">
+<xsd:complexContent>
+<xsd:restriction base="SOAP-ENC:Array">
+<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:string[]"/>
+</xsd:restriction>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="getNames">
+<xsd:all>
+<xsd:element name="responseMsg" type="tns:responseMsg"/>
+<xsd:element name="nameList" type="tns:nameList"/>
+</xsd:all>
+</xsd:complexType>
+<xsd:complexType name="getColors">
+<xsd:all>
+<xsd:element name="responseMsg" type="tns:responseMsg"/>
+<xsd:element name="allColors" type="tns:allColors"/>
+</xsd:all>
+</xsd:complexType>
+</xsd:schema>
+</types>
+<message name="getNamesRequest">
+<part name="set" type="xsd:string"/>
+</message>
+<message name="getNamesResponse">
+<part name="return" type="tns:getNames"/>
+</message>
+<message name="getColorsRequest">
+<part name="which" type="xsd:string"/>
+</message>
+<message name="getColorsResponse">
+<part name="return" type="tns:getColors"/>
+</message>
+<portType name="hirdwebphpPortType">
+<operation name="getNames">
+<input message="tns:getNamesRequest"/>
+<output message="tns:getNamesResponse"/>
+</operation>
+<operation name="getColors">
+<input message="tns:getColorsRequest"/>
+<output message="tns:getColorsResponse"/>
+</operation>
+</portType>
+<binding name="hirdwebphpBinding" type="tns:hirdwebphpPortType">
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+<operation name="getNames">
+<soap:operation soapAction="uri:hirdwebphp/getNames" style="rpc"/>
+<input>
+<soap:body use="encoded" namespace="uri:hirdwebphp" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="uri:hirdwebphp" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+<operation name="getColors">
+<soap:operation soapAction="uri:hirdwebphp/getColors" style="rpc"/>
+<input>
+<soap:body use="encoded" namespace="uri:hirdwebphp" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</input>
+<output>
+<soap:body use="encoded" namespace="uri:hirdwebphp" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+</output>
+</operation>
+</binding>
+<service name="hirdwebphp">
+<port name="hirdwebphpPort" binding="tns:hirdwebphpBinding">
+<soap:address location="http://localhost/test/soap/server.php"/>
+</port>
+</service>
+</definitions>
